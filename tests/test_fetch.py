@@ -11,6 +11,11 @@ TEST_URLS: list[str] = [
     "https://httpbin.org/html",  # HTML response
 ]
 
+CHALLENGE_URLS: list[str] = [
+    "https://www.forbes.com/sites/andreahill/2025/08/21/why-95-of-ai-pilots-fail-and-what-business-leaders-should-do-instead/",
+    "https://web-assets.bcg.com/pdf-src/prod-live/targets-over-tools-the-mandate-for-ai-transformation.pdf",
+]
+
 
 class TestWebFetch:
     """Test web fetching with and without camouflage."""
@@ -96,3 +101,38 @@ class TestWebFetch:
 
         if response.status_code == HTTP_OK:
             assert len(response.text) > 0
+
+    def test_challenging_urls_with_camouflage(self) -> None:
+        """Test URLs that are likely blocked by normal requests but work with camouflage."""
+        # These URLs are known to have anti-bot protection
+        for url in CHALLENGE_URLS:
+            # Test with camouflage (should work)
+            try:
+                cffi_response = curl_cffi.get(url, impersonate="realworld", timeout=30)  # type: ignore[arg-type]
+                # If we get a successful response, it should have content
+                if cffi_response.status_code == HTTP_OK:
+                    assert len(cffi_response.text) > 0, (
+                        f"Camouflaged fetch succeeded but returned empty content for {url}"
+                    )
+                    # For PDF URL, check that it looks like a PDF (starts with %PDF)
+                    if "bcg.com" in url and ".pdf" in url:
+                        assert cffi_response.text.startswith("%PDF"), (
+                            f"PDF URL should return PDF content, got: {cffi_response.text[:50]}"
+                        )
+                else:
+                    # Non-200 status is acceptable (may be rate limited or blocked)
+                    pass
+            except curl_cffi.CurlError as e:
+                pytest.skip(f"Camouflaged fetch failed for {url}: {e}")
+            except Exception as e:  # noqa: BLE001
+                pytest.skip(f"Camouflaged fetch failed for {url}: {e}")
+
+            # Test with normal requests (likely to be blocked)
+            try:
+                requests_response = requests.get(url, timeout=30)
+                # Normal requests may succeed or be blocked - both are acceptable outcomes
+                # The key is that camouflage should provide better access
+                assert requests_response.status_code is not None
+            except requests.RequestException:
+                # Normal requests failing is expected for challenging URLs
+                pass

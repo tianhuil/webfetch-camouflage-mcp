@@ -1,6 +1,6 @@
 # webfetch-camouflage-mcp
 
-[![Tests](https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp/actions/workflows/ci.yml)
+[![Tests](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An MCP (Model Context Protocol) server for web fetching with browser camouflage using curl_cffi.
@@ -17,8 +17,7 @@ An MCP (Model Context Protocol) server for web fetching with browser camouflage 
 Run directly from GitHub using `uvx`:
 
 ```bash
-# Replace YOUR_USERNAME with your actual GitHub username
-uvx git+https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp.git
+uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
 ```
 
 ## Installation
@@ -26,7 +25,7 @@ uvx git+https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp.git
 ### From Source (Development)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp.git
+git clone https://github.com/tianhuil/webfetch-camouflage-mcp.git
 cd webfetch-camouflage-mcp
 uv sync
 ```
@@ -35,7 +34,7 @@ uv sync
 
 ```bash
 # Run directly from GitHub
-uvx git+https://github.com/YOUR_USERNAME/webfetch-camouflage-mcp.git
+uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
 ```
 
 ## Usage

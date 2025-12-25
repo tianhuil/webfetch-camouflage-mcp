@@ -87,26 +87,6 @@ Add the following to your Claude Desktop configuration file:
 }
 ```
 
-### OpenCode (VS Code)
-
-For VS Code with MCP support, add the following to your VS Code settings:
-
-**Location**: `.vscode/settings.json` (in your workspace or globally)
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "webfetch-camouflage": {
-        "command": "uvx",
-        "args": ["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"],
-        "description": "Web fetching with browser camouflage using curl_cffi"
-      }
-    }
-  }
-}
-```
-
 ## Development
 
 ```bash

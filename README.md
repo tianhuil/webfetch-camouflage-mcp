@@ -1,7 +1,7 @@
 # webfetch-camouflage-mcp
 
 [![Tests](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 An MCP (Model Context Protocol) server for web fetching with browser camouflage using curl_cffi.
 

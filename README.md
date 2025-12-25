@@ -59,6 +59,7 @@ The server provides a `fetch_url` tool that accepts:
 
 - `url`: The URL to fetch (required)
 - `impersonate`: Browser to impersonate (optional, defaults to "realworld")
+- `timeout`: Request timeout in seconds (optional, defaults to 10)
 
 The tool returns the fetched content automatically converted from HTML to clean Markdown format.
 

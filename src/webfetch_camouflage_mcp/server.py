@@ -29,7 +29,7 @@ def create_server() -> FastMCP:
     )
 
     @mcp.tool
-    def fetch_url(url: str, impersonate: str | None = "realworld") -> str:
+    def fetch_url(url: str, impersonate: str | None = "realworld", timeout: int = 10) -> str:
         """Fetch web content from a URL with browser camouflage.
 
         Args:
@@ -44,6 +44,7 @@ def create_server() -> FastMCP:
                 safari180_ios, safari184_ios, safari260_ios, firefox133,
                 firefox135, firefox135_android, tor145, edge99, edge101,
                 edge133, edge135
+            timeout: Request timeout in seconds (default: 10)
 
         Returns:
             The fetched content converted to Markdown format, or an error message
@@ -51,7 +52,7 @@ def create_server() -> FastMCP:
 
         """
         try:
-            response = curl_cffi.get(url, impersonate=impersonate)  # type: ignore[arg-type]
+            response = curl_cffi.get(url, impersonate=impersonate, timeout=timeout)  # type: ignore[arg-type]
         except curl_cffi.CurlError as e:
             return f"Error fetching URL {url}: {e!s}"
         except Exception as e:  # noqa: BLE001

@@ -1,0 +1,47 @@
+[project]
+name = "webfetch-camouflage-mcp"
+version = "0.1.0"
+description = "MCP server for web fetching with browser camouflage using curl_cffi"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "curl-cffi>=0.8.0",
+    "fastmcp>=0.9.0",
+]
+
+[project.scripts]
+webfetch-camouflage-mcp = "webfetch_camouflage_mcp.server:main"
+
+[tool.poe.tasks]
+test = "pytest"
+lint = "ruff check ."
+format = "ruff format ."
+typecheck = "pyright"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_*.py" = ["S101"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+package = true
+
+[dependency-groups]
+dev = [
+    "pip-audit>=2.10.0",
+    "poethepoet>=0.38.0",
+    "pyright>=1.1.407",
+    "pytest>=9.0.2",
+    "ruff>=0.14.10",
+]

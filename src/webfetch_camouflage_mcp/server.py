@@ -13,20 +13,21 @@ def create_server() -> FastMCP:
         instructions=textwrap.dedent("""
             This MCP server provides web fetching capabilities with browser camouflage.
             Use the fetch_url tool to retrieve web content while impersonating various browsers.
-            The default impersonate setting is 'chrome' for realistic browser fingerprints.
+            The default impersonate setting is 'realworld' for realistic browser fingerprints.
         """).strip(),
     )
 
     @mcp.tool
-    def fetch_url(url: str, impersonate: curl_cffi.BrowserTypeLiteral | None = "chrome") -> str:
+    def fetch_url(url: str, impersonate: str | None = "realworld") -> str:
         """Fetch web content from a URL with browser camouflage.
 
         Args:
             url: The URL to fetch
-            impersonate: Browser to impersonate (default: 'chrome').
-                Supported values: chrome99, chrome100, chrome101, chrome104,
-                chrome107, chrome110, chrome116, chrome119, chrome120,
-                chrome123, chrome124, chrome131, chrome133a, chrome136,
+            impersonate: Browser to impersonate (default: 'realworld').
+                Can be any string - curl_cffi will attempt to use the corresponding
+                browser fingerprint. Common values include: chrome99, chrome100,
+                chrome101, chrome104, chrome107, chrome110, chrome116, chrome119,
+                chrome120, chrome123, chrome124, chrome131, chrome133a, chrome136,
                 chrome99_android, chrome131_android, safari153, safari155,
                 safari170, safari180, safari184, safari260, safari172_ios,
                 safari180_ios, safari184_ios, safari260_ios, firefox133,
@@ -38,7 +39,7 @@ def create_server() -> FastMCP:
 
         """
         try:
-            response = curl_cffi.get(url, impersonate=impersonate)
+            response = curl_cffi.get(url, impersonate=impersonate)  # type: ignore[arg-type]
         except curl_cffi.CurlError as e:
             return f"Error fetching URL {url}: {e!s}"
         except Exception as e:  # noqa: BLE001

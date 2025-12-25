@@ -9,6 +9,7 @@ An MCP (Model Context Protocol) server for web fetching with browser camouflage 
 
 - Fetch web content with browser fingerprinting to avoid detection
 - Support for various browser impersonation profiles
+- Automatic HTML to Markdown conversion for clean, readable output
 - Built with [curl_cffi](https://github.com/lexiforest/curl_cffi) for realistic TLS/HTTP2 fingerprints
 - MCP protocol support for easy integration
 
@@ -58,6 +59,8 @@ The server provides a `fetch_url` tool that accepts:
 
 - `url`: The URL to fetch (required)
 - `impersonate`: Browser to impersonate (optional, defaults to "realworld")
+
+The tool returns the fetched content automatically converted from HTML to clean Markdown format.
 
 Supported impersonation options:
 - `chrome99`, `chrome100`, `chrome101`, `chrome104`, `chrome107`, `chrome110`, `chrome116`, `chrome119`, `chrome120`, `chrome123`, `chrome124`, `chrome131`, `chrome133a`, `chrome136`

@@ -3,6 +3,7 @@
 import textwrap
 
 import curl_cffi
+import html2text
 from fastmcp import FastMCP
 
 
@@ -13,6 +14,7 @@ def create_server() -> FastMCP:
         instructions=textwrap.dedent("""
             This MCP server provides web fetching capabilities with browser camouflage.
             Use the fetch_url tool to retrieve web content while impersonating various browsers.
+            Content is automatically converted from HTML to clean Markdown format.
             The default impersonate setting is 'realworld' for realistic browser fingerprints.
         """).strip(),
     )
@@ -35,7 +37,8 @@ def create_server() -> FastMCP:
                 edge133, edge135
 
         Returns:
-            The fetched content as a string, or an error message if the request fails.
+            The fetched content converted to Markdown format, or an error message
+            if the request fails.
 
         """
         try:
@@ -45,7 +48,12 @@ def create_server() -> FastMCP:
         except Exception as e:  # noqa: BLE001
             return f"Error fetching URL {url}: {e!s}"
         else:
-            return response.text
+            # Convert HTML to Markdown
+            h = html2text.HTML2Text()
+            h.ignore_links = False  # Keep links as Markdown links
+            h.ignore_images = False  # Keep images as Markdown images
+            h.ignore_tables = False  # Convert tables to Markdown
+            return h.handle(response.text)
 
     return mcp
 

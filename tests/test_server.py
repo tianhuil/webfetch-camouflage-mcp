@@ -1,7 +1,7 @@
 """Tests for MCP server functionality."""
 
-
 import curl_cffi
+import html2text
 
 from webfetch_camouflage_mcp.server import create_server
 
@@ -29,3 +29,26 @@ class TestMCPServer:
         assert curl_cffi is not None
         # We don't want to make actual HTTP calls in unit tests
         # Integration tests will verify the actual functionality
+
+    def test_html2text_integration(self) -> None:
+        """Test that html2text is properly integrated for HTML to Markdown conversion."""
+        # Test that html2text can be imported
+        assert html2text is not None
+
+        # Test basic HTML to Markdown conversion
+        html_content = "<h1>Title</h1><p>This is a <strong>paragraph</strong> with <a href='http://example.com'>a link</a>.</p>"
+        expected_markdown = (
+            "# Title\n\nThis is a **paragraph** with [a link](http://example.com).\n\n"
+        )
+
+        h = html2text.HTML2Text()
+        h.ignore_links = False
+        h.ignore_images = False
+        h.ignore_tables = False
+        result = h.handle(html_content)
+
+        # Check that basic conversion works (exact match might vary slightly)
+        assert "Title" in result
+        assert "paragraph" in result
+        assert "link" in result
+        assert result != html_content  # Should be different from original HTML

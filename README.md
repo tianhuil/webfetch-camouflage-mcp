@@ -65,6 +65,48 @@ Supported impersonation options:
 - `safari153`, `safari155`, `safari170`, `safari180`, `safari184`, `safari260`
 - `edge99`, `edge101`, `edge133`, `edge135`
 
+## MCP Configuration
+
+### Claude Desktop
+
+Add the following to your Claude Desktop configuration file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+**Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "webfetch-camouflage": {
+      "command": "uvx",
+      "args": ["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"],
+      "description": "Web fetching with browser camouflage using curl_cffi"
+    }
+  }
+}
+```
+
+### OpenCode (VS Code)
+
+For VS Code with MCP support, add the following to your VS Code settings:
+
+**Location**: `.vscode/settings.json` (in your workspace or globally)
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "webfetch-camouflage": {
+        "command": "uvx",
+        "args": ["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"],
+        "description": "Web fetching with browser camouflage using curl_cffi"
+      }
+    }
+  }
+}
+```
+
 ## Development
 
 ```bash

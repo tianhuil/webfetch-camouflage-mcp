@@ -3,7 +3,7 @@
 import curl_cffi
 import html2text
 
-from webfetch_camouflage_mcp.server import create_server
+from webfetch_camouflage_mcp.server import create_server, remove_script_and_style_tags
 
 
 class TestMCPServer:
@@ -36,9 +36,9 @@ class TestMCPServer:
         assert html2text is not None
 
         # Test basic HTML to Markdown conversion
-        html_content = "<h1>Title</h1><p>This is a <strong>paragraph</strong> with <a href='http://example.com'>a link</a>.</p>"
-        expected_markdown = (
-            "# Title\n\nThis is a **paragraph** with [a link](http://example.com).\n\n"
+        html_content = (
+            "<h1>Title</h1><p>This is a <strong>paragraph</strong> with "
+            "<a href='http://example.com'>a link</a>.</p>"
         )
 
         h = html2text.HTML2Text()
@@ -52,3 +52,34 @@ class TestMCPServer:
         assert "paragraph" in result
         assert "link" in result
         assert result != html_content  # Should be different from original HTML
+
+    def test_script_and_style_removal(self) -> None:
+        """Test that script and style tags are removed from HTML before conversion."""
+        # HTML with script and style tags
+        html_with_js_css = """
+        <html>
+        <head>
+        <style>body { color: red; }</style>
+        </head>
+        <body>
+        <h1>Title</h1>
+        <p>Content</p>
+        <script>console.log('test');</script>
+        </body>
+        </html>
+        """
+
+        # Remove script and style tags
+        clean_html = remove_script_and_style_tags(html_with_js_css)
+
+        # Check that script and style tags are removed
+        assert "<script>" not in clean_html
+        assert "</script>" not in clean_html
+        assert "<style>" not in clean_html
+        assert "</style>" not in clean_html
+        assert "console.log('test');" not in clean_html
+        assert "body { color: red; }" not in clean_html
+
+        # Check that other content is preserved
+        assert "<h1>Title</h1>" in clean_html
+        assert "<p>Content</p>" in clean_html

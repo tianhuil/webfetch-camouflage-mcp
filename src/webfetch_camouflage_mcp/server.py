@@ -1,10 +1,19 @@
 """MCP Server for web fetching with browser camouflage using curl_cffi."""
 
+import re
 import textwrap
 
 import curl_cffi
 import html2text
 from fastmcp import FastMCP
+
+
+def remove_script_and_style_tags(html: str) -> str:
+    """Remove <script> and <style> tags and their contents from HTML."""
+    # Remove script tags and their contents
+    html = re.sub(r"<script[^>]*>.*?</script>", "", html, flags=re.DOTALL | re.IGNORECASE)
+    # Remove style tags and their contents
+    return re.sub(r"<style[^>]*>.*?</style>", "", html, flags=re.DOTALL | re.IGNORECASE)
 
 
 def create_server() -> FastMCP:
@@ -48,12 +57,15 @@ def create_server() -> FastMCP:
         except Exception as e:  # noqa: BLE001
             return f"Error fetching URL {url}: {e!s}"
         else:
+            # Remove script and style tags before conversion
+            clean_html = remove_script_and_style_tags(response.text)
+
             # Convert HTML to Markdown
             h = html2text.HTML2Text()
             h.ignore_links = False  # Keep links as Markdown links
             h.ignore_images = False  # Keep images as Markdown images
             h.ignore_tables = False  # Convert tables to Markdown
-            return h.handle(response.text)
+            return h.handle(clean_html)
 
     return mcp
 

@@ -108,7 +108,7 @@ class TestWebFetch:
         for url in CHALLENGE_URLS:
             # Test with camouflage (should work)
             try:
-                cffi_response = curl_cffi.get(url, impersonate="realworld", timeout=30)  # type: ignore[arg-type]
+                cffi_response = curl_cffi.get(url, impersonate="chrome", timeout=30)  # type: ignore[arg-type]
                 # If we get a successful response, it should have content
                 if cffi_response.status_code == HTTP_OK:
                     assert len(cffi_response.text) > 0, (

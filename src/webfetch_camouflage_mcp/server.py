@@ -29,7 +29,12 @@ def create_server() -> FastMCP:
     )
 
     @mcp.tool
-    def fetch_url(url: str, impersonate: str | None = "realworld", timeout: int = 10) -> str:
+    def fetch_url(
+        url: str,
+        impersonate: str | None = "realworld",
+        timeout: int = 10,
+        max_chars: int | None = None,
+    ) -> str:
         """Fetch web content from a URL with browser camouflage.
 
         Args:
@@ -45,6 +50,8 @@ def create_server() -> FastMCP:
                 firefox135, firefox135_android, tor145, edge99, edge101,
                 edge133, edge135
             timeout: Request timeout in seconds (default: 10)
+            max_chars: Maximum number of characters to return in the response.
+                If None, returns the full content (default: None)
 
         Returns:
             The fetched content converted to Markdown format, or an error message
@@ -66,7 +73,13 @@ def create_server() -> FastMCP:
             h.ignore_links = False  # Keep links as Markdown links
             h.ignore_images = False  # Keep images as Markdown images
             h.ignore_tables = False  # Convert tables to Markdown
-            return h.handle(clean_html)
+            result = h.handle(clean_html)
+
+            # Apply character limit if specified
+            if max_chars is not None and len(result) > max_chars:
+                result = result[:max_chars] + "..."
+
+            return result
 
     return mcp
 

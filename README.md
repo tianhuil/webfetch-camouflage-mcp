@@ -60,8 +60,9 @@ The server provides a `fetch_url` tool that accepts:
 - `url`: The URL to fetch (required)
 - `impersonate`: Browser to impersonate (optional, defaults to "realworld")
 - `timeout`: Request timeout in seconds (optional, defaults to 10)
+- `max_chars`: Maximum number of characters to return (optional, defaults to None for full content)
 
-The tool returns the fetched content automatically converted from HTML to clean Markdown format.
+The tool returns the fetched content automatically converted from HTML to clean Markdown format. If a limit is specified, the response will be truncated to that many characters with "..." appended.
 
 Supported impersonation options:
 - `chrome99`, `chrome100`, `chrome101`, `chrome104`, `chrome107`, `chrome110`, `chrome116`, `chrome119`, `chrome120`, `chrome123`, `chrome124`, `chrome131`, `chrome133a`, `chrome136`

@@ -92,7 +92,19 @@ Add the following to your Claude Desktop configuration file:
 }
 ```
 
-## Development
+## Testing
+
+### MCP Server Testing
+
+Test both local and UVX installations:
+
+```bash
+echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test", "version": "1.0"}}}' | uv run webfetch-camouflage-mcp
+
+echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test", "version": "1.0"}}}' | uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
+```
+
+### Development Tests
 
 ```bash
 # Run tests

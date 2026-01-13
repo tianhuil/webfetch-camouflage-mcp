@@ -53,4 +53,5 @@ def get_tool_details():
     proc.terminate()
 
 
-get_tool_details()
+if __name__ == "__main__":
+    get_tool_details()

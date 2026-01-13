@@ -104,6 +104,12 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVe
 echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test", "version": "1.0"}}}' | uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
 ```
 
+Alternatively, you can run the following commands:
+
+```py
+get_tool_details.py
+```
+
 ### Development Tests
 
 ```bash

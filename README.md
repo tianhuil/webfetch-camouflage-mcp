@@ -58,7 +58,7 @@ uv run python -m src.webfetch_camouflage_mcp
 The server provides a `fetch_url` tool that accepts:
 
 - `url`: The URL to fetch (required)
-- `impersonate`: Browser to impersonate (optional, defaults to "realworld")
+- `impersonate`: Browser to impersonate (optional, defaults to "chrome")
 - `timeout`: Request timeout in seconds (optional, defaults to 10)
 - `max_chars`: Maximum number of characters to return (optional, defaults to None for full content)
 

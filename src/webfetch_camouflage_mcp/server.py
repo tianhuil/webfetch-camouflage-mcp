@@ -24,14 +24,14 @@ def create_server() -> FastMCP:
             This MCP server provides web fetching capabilities with browser camouflage.
             Use the fetch_url tool to retrieve web content while impersonating various browsers.
             Content is automatically converted from HTML to clean Markdown format.
-            The default impersonate setting is 'realworld' for realistic browser fingerprints.
+            The default impersonate setting is 'chrome' for realistic browser fingerprints.
         """).strip(),
     )
 
     @mcp.tool
     def fetch_url(
         url: str,
-        impersonate: str | None = "realworld",
+        impersonate: str | None = "chrome",
         timeout: int = 10,
         max_chars: int | None = None,
     ) -> str:
@@ -39,7 +39,7 @@ def create_server() -> FastMCP:
 
         Args:
             url: The URL to fetch
-            impersonate: Browser to impersonate (default: 'realworld').
+            impersonate: Browser to impersonate (default: 'chrome').
                 Can be any string - curl_cffi will attempt to use the corresponding
                 browser fingerprint. Common values include: chrome99, chrome100,
                 chrome101, chrome104, chrome107, chrome110, chrome116, chrome119,

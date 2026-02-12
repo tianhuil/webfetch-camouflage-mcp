@@ -92,6 +92,29 @@ Add the following to your Claude Desktop configuration file:
 }
 ```
 
+### OpenCode
+
+Add the following to your `opencode.json` configuration file:
+
+**macOS**: `~/.local/share/opencode/opencode.json`
+**Windows**: `%LOCALAPPDATA%\opencode\opencode.json`
+**Linux**: `~/.local/share/opencode/opencode.json`
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "webfetch-camouflage": {
+      "type": "local",
+      "command": ["uvx", "git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"],
+      "enabled": true
+    }
+  }
+}
+```
+
+Use `use the webfetch-camouflage tool` in your prompts to activate the MCP server.
+
 ## Testing
 
 ### MCP Server Testing

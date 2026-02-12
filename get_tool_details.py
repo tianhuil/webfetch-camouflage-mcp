@@ -1,15 +1,30 @@
+"""Utility script to inspect tools exposed by the webfetch-camouflage-mcp server."""
+
 import json
 import subprocess
+from typing import Any
 
 
-def get_tool_details():
+def get_tool_details() -> list[dict[str, Any]]:
+    """Get the list of tools from the webfetch-camouflage-mcp server.
+
+    Returns:
+        List of tool dictionaries with name and description.
+
+    """
     proc = subprocess.Popen(
-        ["uv", "run", "webfetch-camouflage-mcp"],
+        ["uv", "run", "webfetch-camouflage-mcp"],  # noqa: S607
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
     )
+
+    stdin = proc.stdin
+    stdout = proc.stdout
+    if stdin is None or stdout is None:
+        proc.terminate()
+        return []
 
     # Initialize
     init_msg = json.dumps(
@@ -24,11 +39,11 @@ def get_tool_details():
             },
         },
     )
-    proc.stdin.write(init_msg + "\n")
-    proc.stdin.flush()
+    stdin.write(init_msg + "\n")
+    stdin.flush()
 
     # Skip initialize response
-    _ = proc.stdout.readline()
+    _ = stdout.readline()
 
     # Get tools
     tools_msg = json.dumps(
@@ -39,19 +54,21 @@ def get_tool_details():
             "params": {},
         },
     )
-    proc.stdin.write(tools_msg + "\n")
-    proc.stdin.flush()
+    stdin.write(tools_msg + "\n")
+    stdin.flush()
 
     # Parse and display
-    tools_response = proc.stdout.readline().strip()
+    tools_response = stdout.readline().strip()
     tools_data = json.loads(tools_response)
-
-    for tool in tools_data["result"]["tools"]:
-        print(f"Tool: {tool['name']}")
-        print(f"Description: {tool['description']}")
+    tools = tools_data["result"]["tools"]
 
     proc.terminate()
 
+    return tools
+
 
 if __name__ == "__main__":
-    get_tool_details()
+    tools = get_tool_details()
+    for tool in tools:
+        print(f"Tool: {tool['name']}")  # noqa: T201
+        print(f"Description: {tool['description']}")  # noqa: T201

@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "curl-cffi>=0.8.0",
-    "fastmcp>=0.9.0",
+    "fastmcp>=3.1.0",
     "html2text>=2024.2.26",
 ]
 
@@ -38,6 +38,14 @@ where = ["src"]
 
 [tool.uv]
 package = true
+constraint-dependencies = [
+    "cryptography>=46.0.5",
+    "filelock>=3.20.3",
+    "jaraco-context>=6.1.0",
+    "pip>=26.0",
+    "python-multipart>=0.0.22",
+    "urllib3>=2.6.3",
+]
 
 [dependency-groups]
 dev = [

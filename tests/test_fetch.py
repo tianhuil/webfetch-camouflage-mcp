@@ -45,24 +45,20 @@ class TestWebFetch:
                 assert "args" in response.text  # JSON response from httpbin
 
     def test_curl_cffi_vs_requests_content_length(self) -> None:
-        """Compare content length between curl_cffi and regular requests."""
-        # Use only one URL to avoid rate limiting
         url = TEST_URLS[0]
 
-        # Fetch with curl_cffi
-        cffi_response = curl_cffi.get(url, impersonate="chrome")
-
-        # Fetch with regular requests
+        cffi_response = curl_cffi.get(url, impersonate="chrome", timeout=30)
         requests_response = requests.get(url, timeout=30)
 
-        # Both might be blocked due to rate limiting, but curl_cffi should generally work better
-        # The key test is that curl_cffi can access content that regular requests cannot
-        if cffi_response.status_code == HTTP_OK:
+        assert cffi_response.status_code == HTTP_OK, f"curl_cffi failed: {cffi_response.status_code}"
+        assert len(cffi_response.text) > 0
+
+        # Compare content lengths if requests also succeeds
+        if requests_response.status_code == HTTP_OK:
             assert len(cffi_response.text) > 0
-            # If curl_cffi works but requests doesn't, that's the expected outcome
-            if requests_response.status_code != HTTP_OK:
-                assert requests_response.status_code in [403, 429]  # Blocked/rate limited
-        # If both fail, it might be rate limiting - still acceptable for this test
+            assert len(requests_response.text) > 0
+        else:
+            assert requests_response.status_code in [403, 429]
 
     def test_curl_cffi_different_impersonations(self) -> None:
         """Test curl_cffi with different browser impersonations."""
@@ -88,6 +84,9 @@ class TestWebFetch:
 
         with pytest.raises((curl_cffi.CurlError, curl_cffi.exceptions.RequestException)):
             curl_cffi.get(invalid_url, impersonate="chrome")
+
+        with pytest.raises((curl_cffi.CurlError, curl_cffi.exceptions.RequestException)):
+            curl_cffi.get(TEST_URLS[0], impersonate="this_browser_doesnt_exist")
 
     def test_curl_cffi_timeout_behavior(self) -> None:
         """Test curl_cffi timeout behavior."""

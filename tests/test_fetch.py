@@ -46,12 +46,13 @@ class TestWebFetch:
 
     def test_curl_cffi_vs_requests_content_length(self) -> None:
         """Compare content length between curl_cffi and regular requests."""
-        url = TEST_URLS[1] # Use HTML URL for this test (returns the same content no matter the browser)
+        # Use HTML URL for this test (returns the same content no matter the browser)
+        url = TEST_URLS[1]
 
         cffi_response = curl_cffi.get(url, impersonate="chrome", timeout=30)
         requests_response = requests.get(url, timeout=30)
 
-        assert cffi_response.status_code == HTTP_OK, f"curl_cffi failed: {cffi_response.status_code}"
+        assert cffi_response.status_code == HTTP_OK
         assert len(cffi_response.text) > 0
 
         # Compare content lengths if requests also succeeds

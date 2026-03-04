@@ -1,4 +1,5 @@
 """Tests for web fetching functionality."""
+from typing import Any, cast
 
 import curl_cffi
 import pytest
@@ -87,7 +88,7 @@ class TestWebFetch:
             curl_cffi.get(invalid_url, impersonate="chrome")
 
         with pytest.raises((curl_cffi.CurlError, curl_cffi.exceptions.RequestException)):
-            curl_cffi.get(TEST_URLS[0], impersonate="this_browser_doesnt_exist")
+            curl_cffi.get(TEST_URLS[0], impersonate=cast("Any", "this_browser_doesnt_exist"))
 
     def test_curl_cffi_timeout_behavior(self) -> None:
         """Test curl_cffi timeout behavior."""

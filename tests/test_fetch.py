@@ -45,6 +45,7 @@ class TestWebFetch:
                 assert "args" in response.text  # JSON response from httpbin
 
     def test_curl_cffi_vs_requests_content_length(self) -> None:
+        """Compare content length between curl_cffi and regular requests."""
         url = TEST_URLS[1] # Use HTML URL for this test (returns the same content no matter the browser)
 
         cffi_response = curl_cffi.get(url, impersonate="chrome", timeout=30)

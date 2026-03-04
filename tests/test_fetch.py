@@ -45,7 +45,7 @@ class TestWebFetch:
                 assert "args" in response.text  # JSON response from httpbin
 
     def test_curl_cffi_vs_requests_content_length(self) -> None:
-        url = TEST_URLS[0]
+        url = TEST_URLS[1] # Use HTML URL for this test (returns the same content no matter the browser)
 
         cffi_response = curl_cffi.get(url, impersonate="chrome", timeout=30)
         requests_response = requests.get(url, timeout=30)
@@ -55,8 +55,7 @@ class TestWebFetch:
 
         # Compare content lengths if requests also succeeds
         if requests_response.status_code == HTTP_OK:
-            assert len(cffi_response.text) > 0
-            assert len(requests_response.text) > 0
+            assert len(cffi_response.text) == len(requests_response.text)
         else:
             assert requests_response.status_code in [403, 429]
 

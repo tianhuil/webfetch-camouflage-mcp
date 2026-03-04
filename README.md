@@ -3,102 +3,71 @@
 [![Tests](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-An MCP (Model Context Protocol) server for web fetching with browser camouflage using curl_cffi.
-
-## Features
-
-- Fetch web content with browser fingerprinting to avoid detection
-- Support for various browser impersonation profiles
-- Automatic HTML to Markdown conversion for clean, readable output
-- Built with [curl_cffi](https://github.com/lexiforest/curl_cffi) for realistic TLS/HTTP2 fingerprints
-- MCP protocol support for easy integration
-
-## Quick Start
-
-Run directly from GitHub using `uvx`:
-
-```bash
-uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
-```
+An MCP server for fetching web content with browser camouflage using [curl_cffi](https://github.com/lexiforest/curl_cffi). It mimics real browser TLS/HTTP2 fingerprints to bypass bot detection, returning clean Markdown output converted from HTML. Use it to give AI coding assistants reliable access to web pages that block standard HTTP clients.
 
 ## Installation
 
-### From Source (Development)
+<details>
+<summary>Cursor</summary>
 
-```bash
-git clone https://github.com/tianhuil/webfetch-camouflage-mcp.git
-cd webfetch-camouflage-mcp
-uv sync
-```
-
-### Using uvx (One-off runs)
-
-```bash
-# Run directly from GitHub
-uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
-```
-
-## Usage
-
-### Running the MCP Server
-
-```bash
-# From source
-uv run webfetch-camouflage-mcp
-
-# Or using poe
-poe run
-
-# Or run the module directly
-uv run python -m src.webfetch_camouflage_mcp
-```
-
-### MCP Tool Usage
-
-The server provides a `fetch_url` tool that accepts:
-
-- `url`: The URL to fetch (required)
-- `impersonate`: Browser to impersonate (optional, defaults to "chrome")
-- `timeout`: Request timeout in seconds (optional, defaults to 10)
-- `max_chars`: Maximum number of characters to return (optional, defaults to None for full content)
-
-The tool returns the fetched content automatically converted from HTML to clean Markdown format. If a limit is specified, the response will be truncated to that many characters with "..." appended.
-
-Supported impersonation options:
-- `chrome99`, `chrome100`, `chrome101`, `chrome104`, `chrome107`, `chrome110`, `chrome116`, `chrome119`, `chrome120`, `chrome123`, `chrome124`, `chrome131`, `chrome133a`, `chrome136`
-- `firefox133`, `firefox135`
-- `safari153`, `safari155`, `safari170`, `safari180`, `safari184`, `safari260`
-- `edge99`, `edge101`, `edge133`, `edge135`
-
-## MCP Configuration
-
-### Claude Desktop
-
-Add the following to your Claude Desktop configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-**Linux**: `~/.config/Claude/claude_desktop_config.json`
+Add to `.cursor/mcp.json`:
 
 ```json
 {
   "mcpServers": {
     "webfetch-camouflage": {
       "command": "uvx",
-      "args": ["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"],
-      "description": "Web fetching with browser camouflage using curl_cffi"
+      "args": ["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"]
     }
   }
 }
 ```
 
-### OpenCode
+</details>
 
-Add the following to your `opencode.json` configuration file:
+<details>
+<summary>Claude Code</summary>
 
-**macOS**: `~/.local/share/opencode/opencode.json`
+```bash
+claude mcp add-json webfetch-camouflage '{"command":"uvx","args":["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"]}'
+```
+
+</details>
+
+<details>
+<summary>VSCode</summary>
+
+```bash
+code --add-mcp '{"name":"webfetch-camouflage","command":"uvx","args":["git+https://github.com/tianhuil/webfetch-camouflage-mcp.git"]}'
+```
+
+</details>
+
+<details>
+<summary>Gemini CLI</summary>
+
+```bash
+gemini mcp add webfetch-camouflage uvx -- git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
+```
+
+</details>
+
+<details>
+<summary>Codex CLI</summary>
+
+```bash
+codex mcp add webfetch-camouflage -- uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
+```
+
+</details>
+
+<details>
+<summary>Opencode</summary>
+
+Add to `opencode.json`:
+
+**macOS/Linux**: `~/.local/share/opencode/opencode.json`
 **Windows**: `%LOCALAPPDATA%\opencode\opencode.json`
-**Linux**: `~/.local/share/opencode/opencode.json`
 
 ```json
 {
@@ -113,13 +82,54 @@ Add the following to your `opencode.json` configuration file:
 }
 ```
 
-Use `use the webfetch-camouflage tool` in your prompts to activate the MCP server.
+</details>
 
-## Testing
+### Tool reference
 
-### MCP Server Testing
+The `fetch_url` tool accepts:
 
-Test both local and UVX installations:
+- `url` (required): URL to fetch
+- `impersonate` (optional, default `"chrome"`): browser profile to impersonate
+- `timeout` (optional, default `10`): request timeout in seconds
+- `max_chars` (optional): maximum characters to return; truncates with `...` if set
+
+Supported impersonation profiles:
+
+- **Chrome**: `chrome99`, `chrome100`, `chrome101`, `chrome104`, `chrome107`, `chrome110`, `chrome116`, `chrome119`, `chrome120`, `chrome123`, `chrome124`, `chrome131`, `chrome133a`, `chrome136`
+- **Firefox**: `firefox133`, `firefox135`
+- **Safari**: `safari153`, `safari155`, `safari170`, `safari180`, `safari184`, `safari260`
+- **Edge**: `edge99`, `edge101`, `edge133`, `edge135`
+
+
+## Notes on Development
+
+### Setup
+
+```bash
+git clone https://github.com/tianhuil/webfetch-camouflage-mcp.git
+cd webfetch-camouflage-mcp
+uv sync
+```
+
+### Running the server
+
+```bash
+uv run webfetch-camouflage-mcp
+```
+
+### Available tasks
+
+```bash
+poe test       # Run tests
+poe lint       # Lint code
+poe format     # Format code
+poe typecheck  # Type check
+uv run pip-audit  # Security audit
+```
+
+### MCP server testing
+
+Test the server directly via JSON-RPC:
 
 ```bash
 echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test", "version": "1.0"}}}' | uv run webfetch-camouflage-mcp
@@ -127,31 +137,8 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVe
 echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test", "version": "1.0"}}}' | uvx git+https://github.com/tianhuil/webfetch-camouflage-mcp.git
 ```
 
-Alternatively, you can run the following commands:
-
-```py
-get_tool_details.py
-```
-
-### Development Tests
+Or use the helper script:
 
 ```bash
-# Run tests
-poe test
-
-# Lint code
-poe lint
-
-# Format code
-poe format
-
-# Type check
-poe typecheck
-
-# Run security audit
-uv run pip-audit
+uv run python get_tool_details.py
 ```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

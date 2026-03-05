@@ -48,43 +48,35 @@ class TestClaudeIntegration:
             },
         }
 
-        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
-            json.dump(mcp_config, f)
-            config_path = f.name
-
-        try:
-            result = subprocess.run(  # noqa: S603
-                [
-                    claude,
-                    "-p",
-                    (
-                        "Fetch https://example.com impersonating Chrome and report page title"
-                    ),
-                    "--mcp-config",
-                    config_path,
-                    "--strict-mcp-config",
-                    "--allowedTools",
-                    "mcp__webfetch-camouflage__fetch_url",
-                    "--no-session-persistence",
-                    "--output-format",
-                    "json",
-                    '--model',
-                    'sonnet',
-                    '--verbose'
-                ],
-                capture_output=True,
-                text=True,
-                timeout=120,
-                check=False,
-            )
-        finally:
-            Path(config_path).unlink()
+        result = subprocess.run(  # noqa: S603
+            [
+                claude,
+                "-p",
+                (
+                    "Fetch https://example.com impersonating Chrome and report page title"
+                ),
+                "--mcp-config",
+                json.dumps(mcp_config),
+                # Do not load global MCPs
+                "--strict-mcp-config",
+                "--allowedTools",
+                "mcp__webfetch-camouflage__fetch_url",
+                "--no-session-persistence",
+                "--output-format",
+                "json",
+                '--model',
+                'sonnet',
+                '--verbose'
+            ],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            check=False,
+        )
 
         assert result.returncode == 0, (
             f"claude exited with code {result.returncode}. stderr: {result.stderr[:500]}"
         )
-
-        print(result.stdout)
 
         # Assert that the tool was called
         assert '"name":"mcp__webfetch-camouflage__fetch_url"' in result.stdout.replace(" ", "")

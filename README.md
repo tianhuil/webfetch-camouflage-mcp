@@ -3,7 +3,7 @@
 [![Tests](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-<p style="font-size: 20px;">Give your AI coding assistant reliable access to web pages that block standard HTTP clients.</p>
+<p style="font-size: 24px; font-weight: 600;">Give your AI coding assistant reliable access to web pages that block standard HTTP clients.</p>
 
 Webfetch Camouflage is an MCP server for fetching web content with browser camouflage using [curl_cffi](https://github.com/lexiforest/curl_cffi). It mimics real browser TLS/HTTP2 fingerprints to bypass bot detection, returning clean Markdown output converted from HTML.
 

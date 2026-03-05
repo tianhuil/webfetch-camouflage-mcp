@@ -142,5 +142,5 @@ echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVe
 Or use the helper script:
 
 ```bash
-uv run python get_tool_details.py
+uv run python src/get_tool_details.py
 ```

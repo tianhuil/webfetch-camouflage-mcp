@@ -23,7 +23,7 @@
               <div style="display: flex; height: 20px; width: 20px; align-items: center; justify-content: center; border-radius: 50%; background: #f1f5f9; color: #64748b;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
-              <p style="color: #dc2626;">fetching example.com...</p>
+              <p style="color: #dc2626;">Read http://example.com</p>
             </div>
             <div style="display: flex; align-items: flex-start; gap: 8px;">
               <div style="display: flex; height: 20px; width: 20px; align-items: center; justify-content: center; border-radius: 50%; background: #fef2f2; color: #dc2626;">
@@ -51,7 +51,7 @@
               <div style="display: flex; height: 20px; width: 20px; align-items: center; justify-content: center; border-radius: 50%; background: #f1f5f9; color: #64748b;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
-              <p style="color: #16a34a;">fetching example.com...</p>
+              <p style="color: #16a34a;">Read http://example.com</p>
             </div>
             <div style="display: flex; align-items: flex-start; gap: 8px;">
               <div style="display: flex; height: 20px; width: 20px; align-items: center; justify-content: center; border-radius: 50%; background: #dcfce7; color: #16a34a;">

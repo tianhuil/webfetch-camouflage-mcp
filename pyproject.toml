@@ -51,6 +51,7 @@ constraint-dependencies = [
     "pip>=26.0",
     "python-multipart>=0.0.22",
     "urllib3>=2.6.3",
+    "authlib>=1.6.7"
 ]
 
 [dependency-groups]

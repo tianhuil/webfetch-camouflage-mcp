@@ -5,7 +5,7 @@
 
 <p style="font-size: 20px; font-weight: 600;">Give your AI coding assistant reliable access to web pages that block standard fetch.</p>
 
-<table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+<table style="border-collapse: collapse; width: 100%; margin: 20px 0; max-width: 800px">
   <tr>
     <td style="width: 50%; padding: 15px; vertical-align: top;">
       <div style="overflow: hidden; border-radius: 12px; border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 0 60px -8px rgba(239, 68, 68, 0.45); transition: transform 0.2s;">

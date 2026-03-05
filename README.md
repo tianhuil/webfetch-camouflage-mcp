@@ -3,7 +3,7 @@
 [![Tests](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/tianhuil/webfetch-camouflage-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-<p style="font-size: 24px; font-weight: 600;">Give your AI coding assistant reliable access to web pages that block standard HTTP clients.</p>
+<p style="font-size: 20px; font-weight: 600;">Give your AI coding assistant reliable access to web pages that block standard fetch.</p>
 
 <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
   <tr>
@@ -15,7 +15,7 @@
             <span style="height: 12px; width: 12px; border-radius: 50%; background: #febc2e;"></span>
             <span style="height: 12px; width: 12px; border-radius: 50%; background: #28c840;"></span>
           </div>
-          <span style="font-size: 11px; color: #64748b;">Standard HTTP Client</span>
+          <span style="font-size: 11px; color: #64748b;">Standard fetch</span>
         </div>
         <div style="padding: 16px;">
           <div style="display: flex; flex-direction: column; gap: 12px; font-family: monospace; font-size: 12px;">

@@ -7,7 +7,6 @@ from CI. Run them explicitly with: pytest -m integration
 import json
 import shutil
 import subprocess
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -64,9 +63,9 @@ class TestClaudeIntegration:
                 "--no-session-persistence",
                 "--output-format",
                 "json",
-                '--model',
-                'sonnet',
-                '--verbose'
+                "--model",
+                "sonnet",
+                "--verbose",
             ],
             capture_output=True,
             text=True,
@@ -81,9 +80,9 @@ class TestClaudeIntegration:
         # Assert that the tool was called
         assert '"name":"mcp__webfetch-camouflage__fetch_url"' in result.stdout.replace(" ", "")
         # Assert that the tool returned content
-        assert 'This domain is for use in documentation examples' in result.stdout
+        assert "This domain is for use in documentation examples" in result.stdout
         # Assert that the tool impersonated Chrome
         assert "chrome" in result.stdout.lower()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TestClaudeIntegration().test_fetch_url_tool_called()

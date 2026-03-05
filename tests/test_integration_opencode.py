@@ -76,10 +76,10 @@ class TestOpencodeIntegration:
         # Assert that the tool was called
         assert '"tool":"webfetch-camouflage_fetch_url"' in result.stdout.replace(" ", "")
         # Assert that the tool returned content
-        assert 'This domain is for use in documentation examples' in result.stdout
+        assert "This domain is for use in documentation examples" in result.stdout
         # Assert that the tool impersonated Chrome
         assert "chrome" in result.stdout.lower()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TestOpencodeIntegration().test_fetch_url_tool_called()

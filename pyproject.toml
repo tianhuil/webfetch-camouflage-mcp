@@ -13,6 +13,12 @@ dependencies = [
 [project.scripts]
 webfetch-camouflage-mcp = "webfetch_camouflage_mcp.server:main"
 
+[tool.pytest.ini_options]
+addopts = "-m 'not integration'"
+markers = [
+    "integration: marks tests requiring external AI tools installed locally (excluded from CI)",
+]
+
 [tool.poe.tasks]
 test = "pytest"
 lint = "ruff check ."
